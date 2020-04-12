@@ -1,0 +1,5 @@
+name: DropInfo
+author: 'Plugin Chan<auroracloud4096@gmail.com>'
+main: cn.alpinelee.PluginChan.DropInfo.DropInfoPlugin
+version: '1.0.4'
+api-version: '1.15'

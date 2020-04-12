@@ -1,0 +1,5 @@
+name: DropInfo
+author: 'Plugin Chan<me@kaze.ai>'
+main: com.nsakura.DropInfo.DropInfoPlugin
+version: '1.0.4'
+api-version: '1.15'
