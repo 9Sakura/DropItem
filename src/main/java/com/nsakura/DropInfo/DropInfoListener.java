@@ -2,6 +2,7 @@ package com.nsakura.DropInfo;
 
 import com.nsakura.DropInfo.ItemNameHandler.*;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.MapMeta;
 
 import java.util.logging.Logger;
 
@@ -16,6 +18,7 @@ class DropInfoListener implements Listener {
     private Logger logger = Logger.getLogger("Minecraft");
 
     DropInfoListener(DropInfoPlugin plugin) {
+        BannerPatternNameHandler.getInstance().setPlugin(plugin);
         CommonItemNameHandler.getInstance().setPlugin(plugin);
         EnchantedBookNameHandler.getInstance().setPlugin(plugin);
         PotionNameHandler.getInstance().setPlugin(plugin);
@@ -27,6 +30,9 @@ class DropInfoListener implements Listener {
     private String getEntityName(ItemStack itemStack) {
         String name;
         switch (ItemFilter.getType(itemStack)) {
+            case BANNER_PATTERN:
+                name = BannerPatternNameHandler.getInstance().getName(itemStack);
+                break;
             case ENCHANTED_BOOK:
                 name = EnchantedBookNameHandler.getInstance().getName(itemStack);
                 break;
@@ -72,30 +78,9 @@ class DropInfoListener implements Listener {
     }
 
     @EventHandler
-    public void onEvtityPickupItem(EntityPickupItemEvent event) {
+    public void onEntityPickupItem(EntityPickupItemEvent event) {
         ItemStack itemStack = event.getItem().getItemStack();
-        String name;
-        switch (ItemFilter.getType(itemStack)) {
-            case ENCHANTED_BOOK:
-                name = EnchantedBookNameHandler.getInstance().getName(itemStack);
-                break;
-            case POTION:
-                name = PotionNameHandler.getInstance().getName(itemStack);
-                break;
-            case WRITTEN_BOOK:
-                name = BookNameHandler.getInstance().getName(itemStack);
-                break;
-            case MUSIC_DISC:
-                name = MusicDiscNameHandler.getInstance().getName(itemStack);
-                break;
-            case TOOLS:
-            case WEAPON:
-            case EQUIPMENT:
-                name = ToolsNameHandler.getInstance().getName(itemStack);
-                break;
-            default:
-                name = CommonItemNameHandler.getInstance().getName(itemStack);
-        }
+        String name = getEntityName(itemStack);
         if (event.getRemaining() != 1) {
             event.getItem().setCustomName(name + ChatColor.translateAlternateColorCodes('&', "&r×") + event.getRemaining());
         } else {

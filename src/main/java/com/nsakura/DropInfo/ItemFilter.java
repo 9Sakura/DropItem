@@ -10,7 +10,8 @@ public enum ItemFilter {
     MUSIC_DISC,
     TOOLS,
     WEAPON,
-    EQUIPMENT;
+    EQUIPMENT,
+    BANNER_PATTERN;
 
     public static ItemFilter getType(ItemStack itemStack) {
         switch (itemStack.getType()) {
@@ -23,6 +24,13 @@ public enum ItemFilter {
                 return POTION;
             case WRITTEN_BOOK:
                 return WRITTEN_BOOK;
+            case CREEPER_BANNER_PATTERN:
+            case FLOWER_BANNER_PATTERN:
+            case GLOBE_BANNER_PATTERN:
+            case MOJANG_BANNER_PATTERN:
+            case PIGLIN_BANNER_PATTERN:
+            case SKULL_BANNER_PATTERN:
+                return BANNER_PATTERN;
             case MUSIC_DISC_13:
             case MUSIC_DISC_CAT:
             case MUSIC_DISC_BLOCKS:
